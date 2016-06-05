@@ -1,0 +1,64 @@
+{
+
+"id":"crm-ord-center",
+"cmd":"/root/app/remote/bin/start_crm_csf_remote_01.sh && /usr/sbin/sshd -D",
+"cpus":0.4,
+
+"mem":300,
+
+"instances": 1,
+"constraints":[["hostname", "UNIQUE",""]],
+"env": {
+        "CLUSTER_NAME": "crm_csf_ord_remote_01"
+    },
+"container": {
+
+"type":"DOCKER",
+"docker": {
+
+	"image": "60.3.22.12:5000/remote",
+        "privileged": true,
+	"network": "BRIDGE",
+	"portMappings": [
+
+		{"containerPort": 22,"hostPort": 0,"servicePort": 0, "protocol":"tcp" },
+		{"containerPort": 39999,"hostPort": 0,"servicePort": 0, "protocol":"tcp" }
+		
+		]
+	},
+      "volumes": [
+      {
+        "containerPath": "/root/app",
+        "hostPath": "/app/csfapp/app",
+        "mode": "RW"
+      },{
+        "containerPath": "/root/config",
+        "hostPath": "/app/csfapp/config",
+        "mode": "RW"
+      },{
+        "containerPath": "/root/java",
+        "hostPath": "/app/csfapp/java",
+        "mode": "RW"
+      },{
+        "containerPath": "/root/lib",
+        "hostPath": "/app/csfapp/lib",
+        "mode": "RW"
+      },{
+        "containerPath": "/root/libext",
+        "hostPath": "/app/csfapp/libext",
+        "mode": "RW"
+      },{
+        "containerPath": "/root/sbin",
+        "hostPath": "/app/csfapp/sbin",
+        "mode": "RW"
+      }
+    ]
+
+},
+ "healthChecks":[{
+            "protocol": "COMMAND",
+            "command": { "value": "/heart-check.sh" },
+            "maxConsecutiveFailures": 3
+        }]
+
+}

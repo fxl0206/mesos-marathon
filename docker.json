@@ -1,0 +1,38 @@
+{
+
+"id":"docker42",
+"cmd":"/usr/sbin/sshd -D",
+"cpus":0.2,
+
+"mem":56,
+
+"instances": 3,
+
+"constraints":[["hostname", "UNIQUE",""]],
+
+"container": {
+
+"type":"DOCKER",
+
+"docker": {
+
+"image": "60.3.22.11:5000/remote",
+
+"network": "BRIDGE",
+
+"portMappings": [
+
+{"containerPort": 22,"hostPort": 0,"servicePort": 0, "protocol":"tcp" }
+
+]
+
+}
+
+},
+ "healthChecks":[{
+            "protocol": "COMMAND",
+            "command": { "value": "exit 0" },
+            "maxConsecutiveFailures": 3
+        }]
+
+}
